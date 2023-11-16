@@ -1,11 +1,13 @@
 <?php
     $dbhost = "localhost"; // or the host (whatever ur running)
-    $dbuser = "root"; // user created (using lab 6 so just going to leave it here for now)
-    $dbpass = ""; //empty because no password (using lab 6 so just going to leave it here for now)
+   // $dbuser = "root"; // empty user created (using lab 6 so just going to leave it here for now)
+    //$dbpass = ""; //empty because no password (using lab 6 so just going to leave it here for now)
     $dbname = "classicmodels"; //db working with 
 
     $conn = mysqli_connect($dbhost, $dbuser, $dbpass,$dbname);
+
     $validValue = true;
+
 // if error make sure echo 
 if(mysqli_connect_errno()){
   echo mysqli_connect_error();
@@ -13,31 +15,27 @@ if(mysqli_connect_errno()){
 
 // proces form submission
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-
     // Retrieve form data
     $orderNumber = $_POST["orderNumber"];
     $startDate = $_POST["startDate"];
     $endDate = $_POST["endDate"];
 
-
- 
-        
     // chk order nmber and ensure valid value or date range selected
     if (!empty($orderNumber) && is_numeric($orderNumber) == true) {
         $whereClause = "orders.orderNumber = $orderNumber";
     } else if (!empty($startDate) && !empty($endDate)) {
+    //make sure btwn start and end for searching
         $whereClause = "orders.orderDate BETWEEN '$startDate' AND '$endDate'";
     } else {
-        die("Please select an order number or specify a date range.");
+
+    //if not btwn or there is no order number selected return msg
+        echo "Please select an order number or specify a date range.";
     }
 
     // sql query (using example from a3 description) also from classic models
     $selectedColumns = implode(",", $_POST["columns"]);
-    $sql = "SELECT $selectedColumns
-            FROM orders
-            JOIN orderdetails ON orders.orderNumber = orderdetails.orderNumber
-            JOIN products ON orderdetails.productCode = products.productCode
-            WHERE $whereClause";
+    $sql = "SELECT $selectedColumns FROM orders JOIN orderdetails ON orders.orderNumber = orderdetails.orderNumber
+            JOIN products ON orderdetails.productCode = products.productCode WHERE $whereClause";
 
     // display it
     echo "<h3>SQL Query:</h3>";
@@ -91,39 +89,36 @@ mysqli_close($conn);
             flex-direction: column;
         }
         .checkbox-section {
-            margin-left: 10px; /* 10-20 seems reasonable */
+            margin-left: 10px; /* 10 seems reasonable */
         }
     </style>
 </head>
 <body>
     <h2>Query</h2>
     <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+        <h3>Select Order Paramters</h3>
         <label for="orderNumber">Order Number:</label>
-
-            <input type="textbox" name="orderNumber">
-
+        <input type="textbox" name="orderNumber">
         <br>
-<!--  still unsure how to search by data will have it here as placeholder-->
-        <label for="startDate">Start Date:</label>
-        <input type="date" name="startDate">
-        <br>
+        <label> Order date (YYYY-MM-DD)</label>
+        <label for="startDate">From:</label>
+        <input type="textbox" name="startDate">
 
-        <label for="endDate">End Date:</label>
-        <input type="date" name="endDate">
-        <br>
+
+        <label for="endDate">to:</label>
+        <input type="textbox" name="endDate">
+
 
         
         <!-- create the checkbox column that returns value-->
         <div class="checkbox-section">
             <label>Select Columns to Display:</label>
-            <br>
             <input type="checkbox" name="columns[]" value="orderDate" checked> Order Date
             <input type="checkbox" name="columns[]" value="requiredDate" checked> Required Date
             <input type="checkbox" name="columns[]" value="productName" checked> Product Name
             <input type="checkbox" name="columns[]" value="productDescription" checked> Product Description
             <input type="checkbox" name="columns[]" value="quantityOrdered" checked> Quantity Ordered
             <input type="checkbox" name="columns[]" value="priceEach" checked> Price Each
-            <br>
         </div>
 
         <input type="submit" value="SearchOrder">
@@ -132,20 +127,6 @@ mysqli_close($conn);
     
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
