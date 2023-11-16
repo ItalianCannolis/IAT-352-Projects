@@ -5,7 +5,7 @@
     $dbname = "classicmodels"; //db working with 
 
     $conn = mysqli_connect($dbhost, $dbuser, $dbpass,$dbname);
-
+    $validValue = true;
 // if error make sure echo 
 if(mysqli_connect_errno()){
   echo mysqli_connect_error();
@@ -13,15 +13,19 @@ if(mysqli_connect_errno()){
 
 // proces form submission
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
     // Retrieve form data
     $orderNumber = $_POST["orderNumber"];
     $startDate = $_POST["startDate"];
     $endDate = $_POST["endDate"];
 
-    // chk order nmber or date range selected
-    if (!empty($orderNumber)) {
+
+ 
+        
+    // chk order nmber and ensure valid value or date range selected
+    if (!empty($orderNumber) && is_numeric($orderNumber) == true) {
         $whereClause = "orders.orderNumber = $orderNumber";
-    } elseif (!empty($startDate) && !empty($endDate)) {
+    } else if (!empty($startDate) && !empty($endDate)) {
         $whereClause = "orders.orderDate BETWEEN '$startDate' AND '$endDate'";
     } else {
         die("Please select an order number or specify a date range.");
@@ -95,40 +99,9 @@ mysqli_close($conn);
     <h2>Query</h2>
     <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
         <label for="orderNumber">Order Number:</label>
-        <select name="orderNumber">
-            <!-- ordernumber dropdown menu -->
 
-            <option value ="">Choose Order</option>
- 
-            <option value="10100">10100</option>
-            <option value="10101">10101</option>
-            <option value="10102">10102</option>
-            <option value="10103">10103</option>
-            <option value="10104">10104</option>
-            <option value="10105">10105</option>
-            <option value="10106">10106</option>
-            <option value="10107">10107</option>
-            <option value="10108">10108</option>
-            <option value="10109">10109</option>
-            <option value="10110">10110</option>
-            <option value="10111">10111</option>
-            <option value="10112">10112</option>
-            <option value="10113">10113</option>
-            <option value="10114">10114</option>
-            <option value="10115">10115</option>
-            <option value="10116">10116</option>
-            <option value="10117">10117</option>
-            <option value="10118">10118</option>
-            <option value="10119">10119</option>
-            <option value="10120">10120</option>
-            <option value="10121">10121</option>
-            <option value="10122">10122</option>
-            <option value="10123">10123</option>
-            <option value="10124">10124</option>
-            
-            
-            <!-- can add more depending on size (currently only 24) -->
-        </select>
+            <input type="textbox" name="orderNumber">
+
         <br>
 <!--  still unsure how to search by data will have it here as placeholder-->
         <label for="startDate">Start Date:</label>
