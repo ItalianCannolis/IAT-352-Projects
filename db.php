@@ -1,7 +1,7 @@
 <?php
     $dbhost = "localhost"; // or the host (whatever ur running)
-   // $dbuser = "root"; // empty user created (using lab 6 so just going to leave it here for now)
-    //$dbpass = ""; //empty because no password (using lab 6 so just going to leave it here for now)
+    $dbuser = "root"; // empty user created 
+    $dbpass = ""; //empty because no password 
     $dbname = "classicmodels"; //db working with 
 
     $conn = mysqli_connect($dbhost, $dbuser, $dbpass,$dbname);
@@ -22,20 +22,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // chk order nmber and ensure valid value or date range selected
     if (!empty($orderNumber) && is_numeric($orderNumber) == true) {
-        $whereClause = "orders.orderNumber = $orderNumber";
+        $ifelseCondition = "orders.orderNumber = $orderNumber";
     } else if (!empty($startDate) && !empty($endDate)) {
     //make sure btwn start and end for searching
-        $whereClause = "orders.orderDate BETWEEN '$startDate' AND '$endDate'";
+        $ifelseCondition = "orders.orderDate BETWEEN '$startDate' AND '$endDate'";
     } else {
-
     //if not btwn or there is no order number selected return msg
         echo "Please select an order number or specify a date range.";
     }
 
     // sql query (using example from a3 description) also from classic models
     $selectedColumns = implode(",", $_POST["columns"]);
+    // formatted to structure and examples in lab 5, Find order,details, number.... where condition needed to chk validity
     $sql = "SELECT $selectedColumns FROM orders JOIN orderdetails ON orders.orderNumber = orderdetails.orderNumber
-            JOIN products ON orderdetails.productCode = products.productCode WHERE $whereClause";
+            JOIN products ON orderdetails.productCode = products.productCode WHERE $ifelseCondition";
 
     // display it
     echo "<h3>SQL Query:</h3>";
@@ -88,8 +88,14 @@ mysqli_close($conn);
             display: flex;
             flex-direction: column;
         }
+        /* spaces btwn boxes */
         .checkbox-section {
             margin-left: 10px; /* 10 seems reasonable */
+        }
+        /* styling page button to specific width and location */
+        input[type="submit"] {
+            max-width: 200px; 
+            margin-top: 10px; 
         }
     </style>
 </head>
