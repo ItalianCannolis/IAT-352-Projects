@@ -2,7 +2,7 @@
 
 <?php
 $errors = [];
-
+//not working
 
 if(is_post_request()) {
   // TODO: check for existing user account, if there is none, encrypt the password and save the entry
