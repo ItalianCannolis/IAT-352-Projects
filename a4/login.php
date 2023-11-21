@@ -21,16 +21,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 
         $db = new mysqli('localhost','root','','classicmodels');
  
-        $query = "SELECT encryptedPassword FROM users WHERE email = '?'";
+        $query = "SELECT encryptedPassword FROM users WHERE email = ?";
         // not done am currently adding a new table in mysql to store the user information
         
         $stmt = $db->prepare($query);
-
         $stmt->bind_param("s",$email);
         $stmt->execute();
         $stmt->bind_result($pass_hash);
 
-        if($stmt -> fetch() && password_verify($password,$pass_hash)){
+        if($stmt->fetch() && password_verify($password,$pass_hash)){
             $authenticated = $email;
             $message = "Congrats on login";
             echo $message;
