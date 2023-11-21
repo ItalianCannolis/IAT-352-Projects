@@ -1,5 +1,15 @@
 
-
+<?php
+//not sure how to implement this (from lecture slide)
+// Check if the current protocol is not HTTPS, switch to HTTPS for login and register pages
+//if ($_SERVER['HTTPS'] != 'on') {
+   // $url = "https://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+    //if (strpos($url, 'login.php') !== false || strpos($url, 'register.php') !== false) {
+      //  header("Location: $url");
+        //exit();
+    //}
+//}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
