@@ -92,3 +92,13 @@ dl {
   margin: 1em 30px;
   width: 890px;
 }
+
+/* Button Styling */
+.redirect-button {
+  display: inline-block;
+  padding: 10px 20px;
+  text-decoration: none;
+  background-color: #FADF96;
+  color: #0055DD;
+  border-radius: 5px;
+}

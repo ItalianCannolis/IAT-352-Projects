@@ -40,6 +40,8 @@ $model = find_model_by_name($name);
       </dl>
      
       <!-- add a button to add to watch list -->
+      <a class="redirect-button" href="addtowatchlist.php"> Add to Watchlist </a> 
+      <!-- addtowatchlist is currently empty -->
     </div>
 
   </div>

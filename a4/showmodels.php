@@ -7,7 +7,8 @@
     $model_set = find_all_models();
 
  ?>
-
+    
+    <link rel="stylesheet" type="text/css" href="css/styles.css"> <!-- chart styling -->
     <div>
     <div class="model listing">
         <h1>Models</h1>
