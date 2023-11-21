@@ -17,23 +17,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
     $email = $_POST['email'];
     $password = $_POST['password'];
     if(!empty($email) && !empty($password)){
+
         $pass_hash = password_hash($password, PASSWORD_DEFAULT);
         $db = new mysqli('localhost','root','','classicmodels');
-        echo $pass_hash;
-
-        $sql = "SELECT COUNT(*) FROM users WHERE email = '$email' AND encryptedPassword ='$pass_hash'";
+ 
+        $query = "SELECT COUNT(*) FROM users WHERE email = '?' AND encryptedPassword ='$pass_hash'";
         // not done am currently adding a new table in mysql to store the user information
 
-        $stmt = $db ->prepare($sql);
-        $stmt->bind_param('s',$email);
+        $stmt = $db->prepare($query);
+        $stmt->bind_param("s",$email);
         $stmt->execute();
         $stmt->bind_result($count);
 
-        if($stmt -> fetch() && $count > 0){
+        if($stmt -> fetch() /*&& $count > 0*/){
             $authenticated = $email;
+            $message = "Congrats on login";
+            echo $message;
         } 
         else{
             $message = "Sorry email and password combination is not correct";
+            echo $message;
         }
     }
 }
