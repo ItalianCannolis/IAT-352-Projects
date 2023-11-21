@@ -45,15 +45,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 <html>
 
+    <h1>Login</h1>
+
     <form method = "POST">
         <label> Email </label>
         <input type="textbox" name="email">
         <label> Password </label>
         <input type="textbox" name="password">
-        <input type = "submit" value = "Login">
+        <input type = "submit" value = "Login"> 
+        <br>
+        <br>
+        <!-- redirect non-members to the register page -->
+        <a href="register.php"> Not registered yet. Register here. </a>
     </form>
-
-
 
 </html>
 

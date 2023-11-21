@@ -9,12 +9,14 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
   // TODO: check for existing user account, if there is none, encrypt the password and save the entry
   $db = db_connect();
 
+  //check to see if there are inputs in first name, last name, email, password + password confirm
   if(isset($_POST['firstName']) && isset($_POST['lastName']) 
   && isset($_POST['email']) &&
   isset($_POST['password']) && isset($_POST['password_confirm'])){
     if (!empty($_POST['firstName']) && !empty($_POST['lastName']) 
     && !empty($_POST['email']) &&
     !empty($_POST['password']) && !empty($_POST['password_confirm'])){
+
       //password match
       if($_POST['password'] == $_POST['password_confirm']){
         //email should not be taken
@@ -48,16 +50,12 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
             }
             
           }
+
+
         }
       }
     }
   }
-  // Make sure password matches
-  if (isset($_POST['password']) != ($_SESSION['password'])){
-    // need to get the value of $result to compare password value in password and with the password value in the database
-  }
-  // After the entry is inserted successfully, redirect to dashboard page
-  // header("Location: showmodels.php");
 
   // END TODO
 }
