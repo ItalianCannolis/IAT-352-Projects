@@ -1,48 +1,50 @@
-<?php include 'header.php'; ?>
+<?php include 'header.php'; 
+  include 'query_functions.php';
+?>
 
 <?php
 $errors = [];
-//not working
 
-if(is_post_request()) {
+if($_SERVER['REQUEST_METHOD'] == 'POST') {
   // TODO: check for existing user account, if there is none, encrypt the password and save the entry
-  if(isset($_POST['first_name']) && isset($_POST['last_name']) 
-  && isset($_POST['email']) && isset($_POST['username']) &&
+  $db = db_connect();
+
+  if(isset($_POST['firstName']) && isset($_POST['lastName']) 
+  && isset($_POST['email']) &&
   isset($_POST['password']) && isset($_POST['password_confirm'])){
-    if (!empty($_POST['first_name']) && !empty($_POST['last_name']) 
-    && !empty($_POST['email']) && !empty($_POST['username']) &&
+    if (!empty($_POST['firstName']) && !empty($_POST['lastName']) 
+    && !empty($_POST['email']) &&
     !empty($_POST['password']) && !empty($_POST['password_confirm'])){
       //password match
       if($_POST['password'] == $_POST['password_confirm']){
-        //usernmae should not be taken
-        $sql ="select count(*) as count from admins where username= ?"; //prepared statement to run query, NEVER USE CONCATENATION
+        //email should not be taken
+        $sql ="select count(*) as count from users where email= ?"; //prepared statement to run query, NEVER USE CONCATENATION
         $stmt = mysqli_prepare($db, $sql);
-        mysqli_stmt_bind_param($stmt, "s", $_POST['username']);
+        mysqli_stmt_bind_param($stmt, "s", $_POST['email']);
         mysqli_stmt_execute($stmt);
         $result = mysqli_stmt_get_result($stmt);
 
         if($result){
           $row = mysqli_fetch_assoc($result);
           if($row['count'] > 0){
-            echo "this username is taken";
+            echo "This email has already been used.";
           }
           else{
             $hash_pass = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
-            $sql = 'inset into admins(first_name, last_name, email, username, hashed_password) 
-            values (?,?,?,?,?)';
+            $sql = 'insert into users(firstName, lastName, email, encryptedPassword) 
+            values (?,?,?,?)';
             $stmt = mysqli_prepare($db, $sql);
-            mysqli_stmt_bind_param($stmt, "sssss", //data types all string so pass 5 's'
-            $_POST['first_name'],
-            $_POST['last_name'],
+            mysqli_stmt_bind_param($stmt, "ssss", //data types all string so pass 4 's'
+            $_POST['firstName'],
+            $_POST['lastName'],
             $_POST['email'],
-            $_POST['username'],
             $hash_pass);
 
             $result = mysqli_stmt_execute($stmt);
             if($result){ //for each 'if' there should be an 'else' that prints error
-              $_SESSION['username'] = $_POST['username'];
-              header("Location: index.php");
+              $_SESSION['email'] = $_POST['email'];
+              header("Location: showmodels.php");
             }
             
           }
@@ -52,38 +54,38 @@ if(is_post_request()) {
   }
   // Make sure password matches
   if (isset($_POST['password']) != ($_SESSION['password'])){
-    
+    // need to get the value of $result to compare password value in password and with the password value in the database
   }
   // After the entry is inserted successfully, redirect to dashboard page
-
+  // header("Location: showmodels.php");
 
   // END TODO
 }
 else{
-  if(isset($_SESSION['username'])){
-    header('Location: index.php');
+  if(isset($_SESSION['email'])){
+    header('Location: showmodels.php');
   }
 }
 
 ?>
 
 <?php $page_title = 'Register'; ?>
-<?php include(SHARED_PATH . '/staff_header.php'); ?>
 
-<div id="content">
+<link rel="stylesheet" type="text/css" href="css/styles.css">
+
+<div >
+  
   <h1>Register</h1>
 
   <?php echo display_errors($errors); ?>
 
   <form action="register.php" method="post">
     First Name:<br />
-    <input type="text" name="first_name" value="" required /><br />
+    <input type="text" name="firstName" value="" required /><br />
     Last Name:<br />
-    <input type="text" name="last_name" value="" required /><br />
+    <input type="text" name="lastName" value="" required /><br />
     Email:<br />
     <input type="text" name="email" value="" required /><br />
-    Username:<br />
-    <input type="text" name="username" value="" required /><br />
     Password:<br />
     <input type="password" name="password" value="" required /><br />
     Confirm Password:<br />
