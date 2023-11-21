@@ -16,24 +16,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
     //Retrieve data from form
     $email = $_POST['email'];
     $password = $_POST['password'];
-    $pass_hash = password_hash($password, PASSWORD_DEFAULT);
-    $db = new mysqli('localhost','root','','classicmodels');
+    if(!empty($email) && !empty($password)){
+        $pass_hash = password_hash($password, PASSWORD_DEFAULT);
+        $db = new mysqli('localhost','root','','classicmodels');
+        echo $pass_hash;
 
+        $sql = "SELECT COUNT(*) FROM users WHERE email = '$email' AND encryptedPassword ='$pass_hash'";
+        // not done am currently adding a new table in mysql to store the user information
 
-    $sql = "SELECT COUNT(*) FROM users";
-    $sql .= "WHERE email = ? AND encryptedPassword ='$pass_hash'";
-    // not done am currently adding a new table in mysql to store the user information
+        $stmt = $db ->prepare($sql);
+        $stmt->bind_param('s',$email);
+        $stmt->execute();
+        $stmt->bind_result($count);
 
-    $stmt = $db ->prepare($sql);
-    $stmt->bind_param('s',$name);
-    $stmt->execute();
-    $stmt->bind_result($count);
-
-    if($stmt -> fetch() && $count > 0){
-        $authenticated = $email;
-    } 
-    else{
-        $message = "Sorry email and password combination is not correct";
+        if($stmt -> fetch() && $count > 0){
+            $authenticated = $email;
+        } 
+        else{
+            $message = "Sorry email and password combination is not correct";
+        }
     }
 }
 
