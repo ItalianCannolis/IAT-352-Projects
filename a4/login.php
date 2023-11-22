@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
         $db = new mysqli('localhost','root','','classicmodels');
  
         $query = "SELECT encryptedPassword FROM users WHERE email = ?";
-        // not done am currently adding a new table in mysql to store the user information
+        
         
         $stmt = $db->prepare($query);
         $stmt->bind_param("s",$email);
@@ -37,6 +37,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
         else{
             $message = "Sorry email and password combination is not correct";
             echo $message;
+        }
+
+        if ($authenticated){ 
+            $_SESSION['email'] = $authenticated;
+            //redirect to the callback if one set, otherwise go to homepage
+            // $callback_url = ""
         }
     }
 }

@@ -1,7 +1,7 @@
 <?php include 'header.php'; 
   include 'query_functions.php';
 ?>
-
+<!-- code reference from hands on lab 8 -->
 <?php
 $errors = [];
 
