@@ -1,5 +1,5 @@
 <?php 
-    // include 'header.php'; 
+    //include 'header.php'; 
     dirname(__FILE__);
     include(dirname(__FILE__).'\queryfunction.php');
     include(dirname(__FILE__).'\db.php');
