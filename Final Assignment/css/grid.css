@@ -1,0 +1,18 @@
+.collage {
+   
+    display: -ms-grid;
+    /*display: grid; */
+    
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; 
+    align-content:stretch;
+
+    -ms-grid-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr ;
+    padding-bottom: 0rem;
+    padding:0;
+
+
+    
+  }
