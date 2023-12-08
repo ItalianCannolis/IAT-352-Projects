@@ -17,6 +17,8 @@
             <nav class="navchild">
                 <ul class="nav_links"> 
                     <li> <a href="login.php">Sign in</a> </li>
+                    <li> <a href="register.php">Register</a> </li>
+                    <li> <a href="cover_art_collage.php">Collage</a> </li>
                 </ul>
                 
             </nav>
