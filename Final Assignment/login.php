@@ -3,6 +3,7 @@
 dirname(__FILE__);
 include(dirname(__FILE__).'\queryfunction.php');
 include(dirname(__FILE__).'\db.php');
+include(dirname(__FILE__).'\header.php');
 
 $errors = [];
 $username = '';
@@ -55,17 +56,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 
     <h1>Login</h1>
 
-    <form method = "POST">
-        <label> Username </label>
-        <input type="textbox" name="username">
-        <label> Password </label>
-        <input type="textbox" name="password">
+    <form class = "form-container" method = "POST">
+        <div class = "form-element-cont">
+            <label> Username </label>
+            <input type="textbox" name="username">
+        </div>
+
+        <div class = "form-element-cont">
+            <label> Password </label>
+            <input type="textbox" name="password">
+        </div>
+
         <input type = "submit" value = "Login"> 
-        <br>
         <br>
         <!-- redirect non-members to the register page -->
         <a href="register.php"> Not registered yet. Register here. </a>
     </form>
 
 </html>
-

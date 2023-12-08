@@ -3,6 +3,7 @@
     dirname(__FILE__);
     include(dirname(__FILE__).'\queryfunction.php');
     include(dirname(__FILE__).'\db.php');
+    include(dirname(__FILE__).'\header.php');
 ?>
 <!-- code reference from hands on lab 8 -->
 <?php
@@ -79,7 +80,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     <div >
             
         <h1>Register</h1>
+
         <?php echo display_errors($errors); ?>
+
         <form action="register.php" method="post">
             Username: <br />
             <input type="text" name="username" value="" required /><br />
@@ -91,27 +94,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
             <input type="password" name="password_confirm" value="" required /><br />
             <input type="submit" />
         </form>
-
-        
-
-        
-
-       
-
-        <!-- <form action="register.php" method="post">
-            First Name:<br />
-            <input type="text" name="firstName" value="" required /><br />
-            Last Name:<br />
-            <input type="text" name="lastName" value="" required /><br />
-            Email:<br />
-            <input type="text" name="email" value="" required /><br />
-            Password:<br />
-            <input type="password" name="password" value="" required /><br />
-            Confirm Password:<br />
-            <input type="password" name="password_confirm" value="" required /><br />
-            <input type="submit" />
-        </form> -->
-
         
     </div>
 
