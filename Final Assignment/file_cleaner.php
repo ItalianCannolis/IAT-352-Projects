@@ -1,6 +1,6 @@
 <?php
 
-    include 'query_functions.php';
+    //include 'query_functions.php';
 //$combined = [][];
     $combined = array();
     $combined[] = array();
@@ -60,7 +60,7 @@ function readingFileTXT(){
     $countX = 0;
 
     while ($line2 = fgetcsv($file2)){
-        $ids[] = $line2[0];
+        $ids[] = $line2[1];
 
     }
     fclose($file2);
@@ -87,16 +87,17 @@ function readingFileTXT(){
 
     }
     */
+    $file = fopen('data/Data_needed/release.tsv','r');
     //$file = fopen('data/Data_needed/artist.txt','r');
-    $file = fopen('data/Data_needed/artist_credit.txt','r');
+    //$file = fopen('data/Data_needed/artist_credit.txt','r');
     while ($line = fgets($file)){
 
-        $lineExploded = (explode("	", $line));
+        $lineExploded = (explode("  ", $line));
 
         $test = 10;
         for ($i = 0; $i< count($ids); $i++){
         //for ($i = 0; $i< $test; $i++){
-            if($ids[$i] == $lineExploded[0]){
+            if($ids[$i] == $lineExploded[2]){
 
 
 
@@ -181,8 +182,8 @@ function writeCSV(){
     */
         //For artist file
     
-    //$file = fopen('new_data/artist.csv','w');
-    $file = fopen('new_data/artist_credit.csv','w');
+    $file = fopen('new_data/artist.csv','w');
+    //$file = fopen('new_data/artist_credit.csv','w');
     global $combined;
 
     
