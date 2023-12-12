@@ -2,7 +2,7 @@
  //include 'header.php';
 dirname(__FILE__);
 include(dirname(__FILE__).'\queryfunction.php');
-include(dirname(__FILE__).'\db.php');
+// include(dirname(__FILE__).'\db.php');
 include(dirname(__FILE__).'\header.php');
 
 $errors = [];
@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
     if(!empty($username) && !empty($password)){
 
 
-        $db = new mysqli('localhost','root','','musicbrainz');
+        $db = db_connect();
         //retrieved encrypted password that mathes username
         $query = "SELECT encryptedPassword FROM member WHERE username = ?";
         
