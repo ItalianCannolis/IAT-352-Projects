@@ -20,22 +20,30 @@
 
 
     <?php 
-        $file = fopen("Img/cover_art-cover.bin", "rb");
+        $coverID = find_collage_id_by_name('Bops');
+        $ids = explode(",",$coverID[1]);
+        shuffle($ids);
 
-        $image = find_cover_by_id(5864);
 
-        $path = "img";
         
 
-        $name = "test.jpg";
+        $path = "img";
+        for ($x = 0; $x < 12; $x++) {
+        //echo $ids[$x];
+        $image = find_cover_by_id(intval($ids[$x]));
+
+        $fileExtension = $image[1];
+
+        $name = "collage".$x.$fileExtension;
            // option 1
            $file = fopen($path."/".$name,"w");
-           echo "File name: ".$path."$name".    "\n";
+           //echo "File name: ".$path."$name".    "\n";
            fwrite($file, $image[0]);
 
            fclose($file);
-
-           echo '<img src="Img/test.jpg' . '" />';
+           echo '<img src="Img/'.$name . '" width="390" height="390" />';
+        }
+           //echo '<img src="Img/collage'.$x.'.jpg' . '" />';
 
     ?>
 

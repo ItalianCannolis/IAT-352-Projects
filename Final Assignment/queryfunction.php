@@ -35,4 +35,25 @@
             $array[1] = $row["filetype"];
             return $array;
       }
+
+      function find_collage_id_by_name($name) { //search for cover art by ID
+        
+        $conn = db_connect();
+
+            $sql = "SELECT id_list, name FROM cover_list WHERE name=?";
+            $statement = $conn->prepare($sql);
+            $statement->bind_param("s", $name);
+            $statement->execute() or die("<b>Error:</b> Problem on Retrieving Image BLOB<br/>" . mysqli_connect_error());
+            $result = $statement->get_result();
+        
+            $row = $result->fetch_assoc();
+            //header("Content-type: " . $row["imageType"]);
+            //echo $row["cover"];
+            
+            //echo base64_decode($row["cover"]);
+            //echo ($row["filetype"]);
+            $array[0] = $row["name"];
+            $array[1] = $row["id_list"];
+            return $array;
+      }
 ?>  
