@@ -90,52 +90,22 @@ mysqli_close($db);
     </style>
 </head>
 <body>
-    <h2>Query</h2>
-    <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
-        <h3>Select Order Paramters</h3>
-        <label for="orderNumber">Order Number:</label>
-        <input type="textbox" name="orderNumber">
-        <br>
-        <label> Order date (YYYY-MM-DD)</label>
-        <label for="startDate">From:</label>
-        <input type="textbox" name="startDate">
+    <header>
+        <nav class="navchild">
+            <ul class="nav_links">
+                <!-- linking to each albun art on database? -->
+            </ul>
+        </nav>
+    </header>
 
-
-        <label for="endDate">to:</label>
-        <input type="textbox" name="endDate">
-
-
-        
-        <!-- create the checkbox column that returns value-->
-        <div class="checkbox-section">
-            <label>Select Columns to Display:</label>
-            <input type="checkbox" name="columns[]" value="orderDate" checked> Order Date
-            <input type="checkbox" name="columns[]" value="requiredDate" checked> Required Date
-            <input type="checkbox" name="columns[]" value="productName" checked> Product Name
-            <input type="checkbox" name="columns[]" value="productDescription" checked> Product Description
-            <input type="checkbox" name="columns[]" value="quantityOrdered" checked> Quantity Ordered
-            <input type="checkbox" name="columns[]" value="priceEach" checked> Price Each
-        </div>
-
-        <input type="submit" value="SearchOrder">
-    </form>
-
-        <!-- Your search form content -->
-    <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
-        <!-- Search input fields -->
-        <input type="text" name="search_term">
+    <h2>Search Cover Arts</h2>
+    <form method="get" action="cover_art_search.php">
+        <!-- search for cover art -->
+        <input type="text" name="search_term" placeholder="search cover art">
         <input type="submit" value="Search">
     </form>
-    <!-- Display search results here if any -->
 
-    
 </body>
+
 </html>
 
-
-
-<!-- select id, name from employee -->
-<!-- fetch_row [1, 'David'] -->
-<!-- -->
-<!-- -->
-<!-- -->
