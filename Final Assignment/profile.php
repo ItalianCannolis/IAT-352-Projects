@@ -6,31 +6,16 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <header>
-        <h1 class="navtitle"><a href="index.html">Vinyl Visions</a></h1>
-        <nav class="navchild">
-            <ul class="nav_links">
+
+
                 <?php
                 session_start();
                 include(dirname(__FILE__).'\queryfunction.php');
                 include(dirname(__FILE__).'\header.php');
                 
-                if (isset($_SESSION['username'])) {
-                    echo '<li><a href="logout.php">Logout</a></li>';
-                    echo '<li><a href="profile.php">Profile</a></li>';
-                    echo '<li><a href="edit_profile.php">Edit Profile</a></li>'; //<!-- Only visible for logged-in users -->
-                } else {
-                    echo '<li><a href="login.php">Sign in</a></li>';
-                    echo '<li><a href="register.php">Register</a></li>';
-                    exit(); // Exit 
-                }
                 ?>
-                <li><a href="cover_art_search.php">Search Cover Arts</a></li>
-                <li><a href="cover_art_getter.php">Cover Art Catalogue</a></li>
-                <li><a href="cover_art_collage.php">Collage</a></li>
-            </ul>
-        </nav>
-    </header>
+
+
 
     <main>
         <section class="profile-info">
