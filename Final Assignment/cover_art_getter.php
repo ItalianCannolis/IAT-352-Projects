@@ -70,18 +70,38 @@
 
         for ($x = 0; $x < 12; $x++) {
             //echo $ids[$x];
-                $image = find_cover_by_id(intval($ids[$x]));
+                $total = count($ids);
+                
+                if($total >= 12 ||($total < 12 && $x < ($total-1)) ){
+                    $image = find_cover_by_id(intval($ids[$x]));
+                    $fileExtension = $image[1];
 
-                $fileExtension = $image[1];
+                    $name = "collage".$x.$fileExtension;
+                    // option 1
+                    $file = fopen($path."/".$name,"w");
+                    //echo "File name: ".$path."$name".    "\n";
+                    fwrite($file, $image[0]);
 
-                $name = "collage".$x.$fileExtension;
-                // option 1
-                $file = fopen($path."/".$name,"w");
-                //echo "File name: ".$path."$name".    "\n";
-                fwrite($file, $image[0]);
+                    fclose($file);
+                    echo '<img src="Img/'.$name . '" width="25%" height="25%" />';
+                }
+                else if($total < 12 && $x >= ($total-1)){
 
-                fclose($file);
-                echo '<img src="Img/'.$name . '" width="25%" height="25%" />';
+
+                    $duped_id = rand(0, ($total-1));
+                    $image = find_cover_by_id(intval($ids[$duped_id]));
+                    $fileExtension = $image[1];
+
+                    $name = "collage".$x.$fileExtension;
+
+                    $file = fopen($path."/".$name,"w");
+
+                    fwrite($file, $image[0]);
+
+                    fclose($file);
+                    echo '<img src="Img/'.$name . '" width="25%" height="25%" />';
+
+                }
         }
     }
 
