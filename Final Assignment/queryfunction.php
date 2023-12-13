@@ -57,6 +57,26 @@
             return $array;
       }
 
+      function find_collage_owner_by_mem_id($id) { //search for cover art by ID
+        
+        $conn = db_connect();
+
+            $sql = "SELECT name FROM cover_list WHERE mem_id=?";
+            $statement = $conn->prepare($sql);
+            $statement->bind_param("i", $id);
+            $statement->execute() or die("<b>Error:</b> Problem on Retrieving collage names<br/>" . mysqli_connect_error());
+            $result = $statement->get_result();
+        
+            $row = $result->fetch_assoc();
+            //header("Content-type: " . $row["imageType"]);
+            //echo $row["cover"];
+            
+            //echo base64_decode($row["cover"]);
+            //echo ($row["filetype"]);
+            $array[0] = $row["name"];
+            return $array;
+      }
+
       function find_album_by_name($name) { //search for cover art by ID
         
         $conn = db_connect();
