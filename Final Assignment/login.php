@@ -1,5 +1,6 @@
 <?php 
  //include 'header.php';
+session_start();
 dirname(__FILE__);
 include(dirname(__FILE__).'\queryfunction.php');
 // include(dirname(__FILE__).'\db.php');
@@ -9,43 +10,29 @@ $errors = [];
 $username = '';
 $password = '';
 
-// if(isset($_SESSION['username'])){
-//     header("Location: showmodels.php");
-// }
-
-
-
 if ($_SERVER['REQUEST_METHOD'] == 'POST'){
-    //Retrieve data from form
+    // Retrieve data from form
     $username = $_POST['username'];
     $password = $_POST['password'];
+    
     if(!empty($username) && !empty($password)){
-
-
         $db = db_connect();
-        //retrieved encrypted password that mathes username
+        
+        // Retrieve encrypted password that matches username
         $query = "SELECT encryptedPassword FROM member WHERE username = ?";
         
-        
         $stmt = $db->prepare($query);
-        $stmt->bind_param("s",$username);
+        $stmt->bind_param("s", $username);
         $stmt->execute();
         $stmt->bind_result($pass_hash);
 
-        if($stmt->fetch() && password_verify($password,$pass_hash)){
-            $authenticated = $username;
-            $message = "Congrats on login";
-            echo $message;
-        } 
-        else{
-            $message = "Sorry email and password combination is not correct";
-            echo $message;
-        }
-
-        if ($authenticated){ 
-            $_SESSION['email'] = $authenticated;
-            //redirect to the callback if one set, otherwise go to homepage
-            // $callback_url = ""
+        if ($stmt->fetch() && password_verify($password, $pass_hash)) {
+            $_SESSION['username'] = $username; // Set session variable upon successful login
+            header("Location: index.php"); // Redirect to index page after successful login
+            exit();
+        } else {
+            $message = "Sorry, email and password combination is not correct.";
+            echo $message; // Output login failure message
         }
     }
 }
