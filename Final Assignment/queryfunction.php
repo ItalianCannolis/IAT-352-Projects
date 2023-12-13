@@ -80,9 +80,7 @@
                 $array[$count] = $row['name'];
                 $count++;
             }
-            //echo base64_decode($row["cover"]);
-            //echo ($row["filetype"]);
-            //$array[0] = $row["name"];
+ 
             return $array;
 
       }
@@ -130,25 +128,37 @@
         
         $conn = db_connect();
                     
-            $sql ='SELECT release_group.name AS "album_name",medium.track_count AS "track_count",tracks.length AS "track_length",tracks.name AS "track_name", artist_cred.name AS "artist_name" FROM release_group, songs, `medium`,tracks, artist_cred WHERE release_group.name = ? AND release_group.id = songs.release_group AND medium.song = songs.id AND medium.id = tracks.medium AND artist_cred.id = release_group.artist_credit';
+            $sql ='SELECT songs_group.name AS "album_name",medium.track_count AS "track_count",tracks.length AS "track_length",tracks.name AS "track_name", artist_cred.name AS "artist_name" FROM songs_group, songs, `medium`,tracks, artist_cred WHERE songs_group.name = ? AND songs_group.id = songs.songs_group AND medium.song = songs.id AND medium.id = tracks.medium AND artist_cred.id = songs_group.artist_credit';
             
             $statement = $conn->prepare($sql);
             $statement->bind_param("s", $name);
             $statement->execute() or die("<b>Error:</b> Problem on Retrieving Image BLOB<br/>" . mysqli_connect_error());
             $result = $statement->get_result();
         
-            $row = $result->fetch_assoc();
+            //$row = $result->fetch_assoc();
             //header("Content-type: " . $row["imageType"]);
             //echo $row["cover"];
             
             //echo base64_decode($row["cover"]);
             //echo ($row["filetype"]);
             //$array[0] = $row["id"];
-            $array[0] = $row["album_name"];
-            $array[1] = $row["artist_name"];
-            $array[2] = $row["track_name"];
-            $array[3] = $row["track_count"];
-            $array[4] = $row["track_length"];
+
+            $array = array();
+            $array[] = array();
+            $count = 0;
+
+            while ($row = $result->fetch_assoc()) {
+
+                $array[$count][0] = $row["album_name"];
+                $array[$count][1] = $row["artist_name"];
+                $array[$count][2] = $row["track_name"];
+                $array[$count][3] = $row["track_count"];
+                $array[$count][4] = $row["track_length"];
+
+                $count++;
+            }
+ 
+
             return $array;
       }
 
@@ -167,6 +177,46 @@
 
           
             return  $row["mem_id"];
+      }
+
+      function find_member_data_by_mem_id($mem_id) { //search for cover art by ID
+        
+        $conn = db_connect();
+
+            $sql = "SELECT username, email, profile_pic FROM member WHERE mem_id=?";
+            $statement = $conn->prepare($sql);
+            $statement->bind_param("i", $mem_id);
+            $statement->execute() or die("<b>Error:</b> Problem on Retrieving email, username and profile pic<br/>" . mysqli_connect_error());
+            $result = $statement->get_result();
+        
+            $row = $result->fetch_assoc();
+
+            $array[0] = $row["username"];
+            $array[1] = $row["email"];
+            $array[2] = $row["profile_pic"];
+            return  $array;
+      }
+
+      function upload_profile_pic_by_mem_id($mem_id,$profile_pic) { //upload new profile pic
+        
+        $conn = db_connect();
+
+        $sql = "UPDATE member
+        SET profile_pic = ?
+        WHERE mem_id = ?";
+
+            //$sql = "SELECT username, email, profile_pic FROM member WHERE mem_id=?";
+            $statement = $conn->prepare($sql);
+            $statement->bind_param("bi",$profile_pic ,$mem_id);
+            $statement->execute() or die("<b>Error:</b> Problem on Retrieving email, username and profile pic<br/>" . mysqli_connect_error());
+            $result = $statement->get_result();
+        
+            $row = $result->fetch_assoc();
+            
+            $array[0] = $row["username"];
+            $array[1] = $row["email"];
+            $array[2] = $row["profile_pic"];
+            return  $array;
       }
 
 
