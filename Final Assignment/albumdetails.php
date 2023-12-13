@@ -9,10 +9,9 @@ $name = $_GET['product'] ?? '1'; // PHP > 7.0
 $album = find_album_by_name($name); 
 
 ?>
-<link rel="stylesheet" type="text/css" href="css/styles.css">
 
 <div >
-  <div class="model show"> 
+  <div class="album show"> 
     <!-- display Model details of selected model -->
 
     <h1>Album Name: <?php echo htmlspecialchars($album[0]); ?></h1>
@@ -36,7 +35,7 @@ $album = find_album_by_name($name);
       </dl>
      
       <!-- add a button to add to watch list -->
-      <a class="redirect-button" href="addtowatchlist.php"> Add to Watchlist </a> 
+      <a class="redirect-button" href="addtowatchlist.php"> Add to Collage </a> 
       <!-- addtowatchlist is currently empty -->
     </div>
 
