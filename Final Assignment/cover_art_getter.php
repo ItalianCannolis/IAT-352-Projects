@@ -1,7 +1,8 @@
 <?php 
  include 'header.php';
  include 'queryfunction.php';
- include 'cover_art_functions.php'
+ include 'cover_art_functions.php';
+ session_start();
  ?>
 <!DOCTYPE html>
 <html lang='en'>
@@ -22,10 +23,11 @@
 
     <?php 
     if(isset($_SESSION['user_id'])){
+        echo "Session active";
        $collageNames = find_collage_owner_by_mem_id($_SESSION['user_id']);
         generate_dropdown($collageNames);
     }
-    
+
     if(isset($_POST['collagename'])){
             $coverID = find_collage_id_by_name($_POST['collagename']);
             $ids = explode(",",$coverID[1]);
