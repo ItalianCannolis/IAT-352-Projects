@@ -6,7 +6,7 @@
  ?>
 <!DOCTYPE html>
 <html lang='en'>
-<head>|
+<head>
 <meta charset='UTF-8'>
     <meta name='viewport' content='width=device-width, initial-scale=1.0'>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
@@ -22,9 +22,10 @@
 
 
     <?php 
-    if(isset($_SESSION['user_id'])){
-        echo "Session active";
-       $collageNames = find_collage_owner_by_mem_id($_SESSION['user_id']);
+    if(isset($_SESSION['mem_id'])){
+     
+       $collageNames = find_collage_owner_by_mem_id($_SESSION['mem_id']);
+
         generate_dropdown($collageNames);
     }
 
@@ -58,10 +59,6 @@
 
     ?>
 
-    <form action="cover_art_getter.php" method="post">
-    <label>Collage Name:</label> 
-     <input type="text" name="collagename">
-    <input type="submit">
-    </form>
+
 
 </body>
