@@ -2,7 +2,7 @@
     define("DB_SERVER", "localhost");// or the host (whatever ur running)
     define("DB_USER", "root"); // empty user created 
     define("DB_PASS", ""); //empty because no password 
-    define("DB_NAME", "musicbrainz"); //db working with 
+    define("DB_NAME", "VinylVisions"); //db working with 
 
     $validValue = true;
 
