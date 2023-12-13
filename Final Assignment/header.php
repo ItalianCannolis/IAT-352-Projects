@@ -8,7 +8,7 @@
 </head>
 <body>
     <header>
-        <h1 class="navtitle"><a href="index.html">Vinyl Visions</a></h1>
+        <h1 class="navtitle"><a href="index.php">Vinyl Visions</a></h1>
         <nav class="navchild">
             <ul class="nav_links">
                 <?php
