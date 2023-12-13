@@ -55,6 +55,7 @@
             $array[0] = $row["name"];
             $array[1] = $row["id_list"];
             return $array;
+            //return $result;
       }
 
 
@@ -70,14 +71,20 @@
             $statement->execute() or die("<b>Error:</b> Problem on Retrieving collage names<br/>" . mysqli_connect_error());
             $result = $statement->get_result();
         
-            $row = $result->fetch_assoc();
+            
             //header("Content-type: " . $row["imageType"]);
             //echo $row["cover"];
-            
+            $array = array();
+            $count = 0;
+            while ($row = $result->fetch_assoc()) {
+                $array[$count] = $row['name'];
+                $count++;
+            }
             //echo base64_decode($row["cover"]);
             //echo ($row["filetype"]);
-            $array[0] = $row["name"];
+            //$array[0] = $row["name"];
             return $array;
+
       }
 
       function find_album_by_name($name) { //search for cover art by ID
@@ -104,6 +111,23 @@
             $array[3] = $row["track_count"];
             $array[4] = $row["track_length"];
             return $array;
+      }
+
+
+      function find_id_by_username($username) { //search for cover art by ID
+        
+        $conn = db_connect();
+
+            $sql = "SELECT mem_id FROM member WHERE username=?";
+            $statement = $conn->prepare($sql);
+            $statement->bind_param("s", $username);
+            $statement->execute() or die("<b>Error:</b> Problem on Retrieving mem_id<br/>" . mysqli_connect_error());
+            $result = $statement->get_result();
+        
+            $row = $result->fetch_assoc();
+
+          
+            return  $row["mem_id"];
       }
 
 
