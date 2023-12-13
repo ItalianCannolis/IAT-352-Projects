@@ -83,8 +83,8 @@
       function find_album_by_name($name) { //search for cover art by ID
         
         $conn = db_connect();
-
-            $sql = 'SELECT release_group.id,release_group.name,release_group.artist_credit,songs.release_group,songs.name,medium.track_count,tracks.length FROM release_group, songs, medium,tracks WHERE release_group.name=? AND release_group.id = songs.release_group AND medium.song == songs.id AND medium.id == tracks.medium';
+                    
+            $sql ='SELECT release_group.name AS "album_name",medium.track_count AS "track_count",tracks.length AS "track_length",tracks.name AS "track_name", artist_cred.name AS "artist_name" FROM release_group, songs, `medium`,tracks, artist_cred WHERE release_group.name = ? AND release_group.id = songs.release_group AND medium.song = songs.id AND medium.id = tracks.medium AND artist_cred.id = release_group.artist_credit';
             
             $statement = $conn->prepare($sql);
             $statement->bind_param("s", $name);
@@ -97,9 +97,12 @@
             
             //echo base64_decode($row["cover"]);
             //echo ($row["filetype"]);
-            $array[0] = $row["id"];
-            $array[1] = $row["artist_credit"];
-            $array[2] = $row["name"];
+            //$array[0] = $row["id"];
+            $array[0] = $row["album_name"];
+            $array[1] = $row["artist_name"];
+            $array[2] = $row["track_name"];
+            $array[3] = $row["track_count"];
+            $array[4] = $row["track_length"];
             return $array;
       }
 
