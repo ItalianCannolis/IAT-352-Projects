@@ -24,7 +24,11 @@
                     echo '<li><a href="register.php">Register</a></li>';
                 }
                 ?>
+                <li> <a href="cover_art_getter.php">Cover Art Catalogue</a> </li>
                 <li><a href="cover_art_collage.php">Collage</a></li>
+                <li> <button onclick="location.href = 'login.php';" id="myButton" class="submit-button" >Sign in</button> </li>
             </ul>
         </nav>
     </header>
+
+    
