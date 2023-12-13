@@ -20,4 +20,13 @@ echo '<input type="submit">
 </form>';
 
 }
+
+function generate_new_collage_form(){
+    echo '<form action="cover_art_getter.php" method="post">';
+    echo '<label for="newCollage">Create a new collage:</label>
+    <input type="text" name = "newCollage">';
+    echo '<input type="submit">
+    </form>';
+    
+    }
 ?>
