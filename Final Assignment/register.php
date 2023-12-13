@@ -2,7 +2,7 @@
     //include 'header.php'; 
     dirname(__FILE__);
     include(dirname(__FILE__).'\queryfunction.php');
-    include(dirname(__FILE__).'\db.php');
+    // include(dirname(__FILE__).'\db.php');
     include(dirname(__FILE__).'\header.php');
 ?>
 <!-- code reference from hands on lab 8 -->
