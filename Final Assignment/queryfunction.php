@@ -87,6 +87,45 @@
 
       }
 
+      function create_new_collage_by_mem_id($id,$name) { //search for cover art by ID
+        
+        $conn = db_connect();
+
+            $sql = "INSERT INTO cover_list(mem_id,name,id_list) 
+            VALUES (?,?,'/n')";
+            
+            $statement = $conn->prepare($sql);
+            $statement->bind_param("is", $id,$name);
+            $statement->execute() or die("<b>Error:</b> Problem on sending collage data<br/>" . mysqli_connect_error());
+
+
+      }
+      function add_to_collage_by_mem_id($mem_id,$cover_list_name,$album_id) { 
+        $album_id_list = find_collage_id_by_name($cover_list_name);
+        if($album_id_list[1] != '/n'){
+            
+            $album_id_list[1] = $album_id_list[1].",".$album_id;
+        }
+        else{
+            $album_id_list[1] = $album_id;
+        }
+
+        $conn = db_connect();
+
+        
+            $sql = "UPDATE cover_list
+            SET id_list = ?
+            WHERE mem_id = ? AND name = ?";
+
+
+            
+            $statement = $conn->prepare($sql);
+            $statement->bind_param("sis", $album_id_list[1],$mem_id,$cover_list_name);
+            $statement->execute() or die("<b>Error:</b> Problem on sending collage data<br/>" . mysqli_connect_error());
+
+
+      }
+
       function find_album_by_name($name) { //search for cover art by ID
         
         $conn = db_connect();
