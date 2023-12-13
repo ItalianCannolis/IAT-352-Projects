@@ -1,8 +1,9 @@
 <?php 
+ session_start();
  include 'header.php';
  include 'queryfunction.php';
  include 'cover_art_functions.php';
- session_start();
+
  ?>
 <!DOCTYPE html>
 <html lang='en'>
@@ -21,7 +22,9 @@
 
 
     <?php 
+
     if(isset($_SESSION['mem_id'])){
+        //echo $_SESSION['mem_id'];
         $path = "img";
         $collageNames = find_collage_owner_by_mem_id($_SESSION['mem_id']);
 
