@@ -16,7 +16,7 @@
 </head>
 <body>
 <div class = "collage">
-    <!---<img width="390" height="390" id='image1' class = 'collageImg'/> -->
+    
 
 </div>
 
@@ -24,12 +24,14 @@
     <?php 
 
     if(isset($_SESSION['mem_id'])){
-        //echo $_SESSION['mem_id'];
+       
         $path = "img";
         $collageNames = find_collage_owner_by_mem_id($_SESSION['mem_id']);
-
+        
+        //Checks for if there is a collage list to pull from based on the mem_id
         if($collageNames != null){
             if(isset($_POST['collagename'])){
+                //Grabs the ids of the cover art to reference for later
                     $coverID = find_collage_id_by_name($_POST['collagename']);
                     if ($coverID[1] != '/n'){
                         $ids = explode(",",$coverID[1]);
@@ -81,32 +83,47 @@
                 
                 if($total >= 12 ||($total < 12 && $x < ($total-1)) ){
                     $image = find_cover_by_id(intval($ids[$x]));
-                    $fileExtension = $image[1];
+                    if($image[0] != null){
+                        $fileExtension = $image[1];
 
-                    $name = "collage".$x.$fileExtension;
-                    // option 1
-                    $file = fopen($path."/".$name,"w");
-                    //echo "File name: ".$path."$name".    "\n";
-                    fwrite($file, $image[0]);
+                        $name = "collage".$x.$fileExtension;
+                        // option 1
+                        $file = fopen($path."/".$name,"w");
+                        //echo "File name: ".$path."$name".    "\n";
+                        fwrite($file, $image[0]);
 
-                    fclose($file);
-                    echo '<img src="Img/'.$name . '" width="25%" height="25%" />';
+                        fclose($file);
+                        echo '<img src="Img/'.$name . '" width="25%" height="25%" />';
+                    }
+                    else{
+                        echo "<h2> There seems to be a problem with recalling the id's! so sorry about that try again later </h2>";
+                        echo "<br>";
+                        echo "<h2> We had to manually insert the images so you added albums we don't have images for, sorry! </h2>";
+                        break;
+                    }
                 }
                 else if($total < 12 && $x >= ($total-1)){
 
+                    if($image[0] != null){
+                        $duped_id = rand(0, ($total-1));
+                        $image = find_cover_by_id(intval($ids[$duped_id]));
+                        $fileExtension = $image[1];
 
-                    $duped_id = rand(0, ($total-1));
-                    $image = find_cover_by_id(intval($ids[$duped_id]));
-                    $fileExtension = $image[1];
+                        $name = "collage".$x.$fileExtension;
 
-                    $name = "collage".$x.$fileExtension;
+                        $file = fopen($path."/".$name,"w");
 
-                    $file = fopen($path."/".$name,"w");
+                        fwrite($file, $image[0]);
 
-                    fwrite($file, $image[0]);
-
-                    fclose($file);
-                    echo '<img src="Img/'.$name . '" width="25%" height="25%" />';
+                        fclose($file);
+                        echo '<img src="Img/'.$name . '" width="25%" height="25%" />';
+                    }
+                    else{
+                        echo "<h2> There seems to be a problem with recalling the id's! so sorry about that try again later </h2>";
+                        echo "<br>";
+                        echo "<h2> We had to manually insert the images so you added albums we don't have images for, sorry! </h2>";
+                        break;
+                    }
 
                 }
         }
