@@ -3,7 +3,7 @@ session_start();
 session_unset();
 session_destroy();
 
-// Redirect to the initialize page
-header("Location: initialize.php");
-exit();
+// Redirect to the index page
+header("Location: index.php");
+
 ?>

@@ -5,7 +5,7 @@
 
 // $id = isset($_GET['id']) ? $_GET['id'] : '1';
 $name = $_GET['product'] ?? '1'; // PHP > 7.0
-//cho $_GET['search_term'];
+
 $album = find_album_by_name($_GET['search_term']); 
 
 ?>
