@@ -48,6 +48,8 @@ $album = find_album_by_name($_GET['search_term']);
 <!-- Display comments -->
 <h3>Comments</h3>
 
+<div id="comments-container">
+
 <?php
 // $albumId contains the ID of the album
 // comments for the specific album from the database
@@ -59,16 +61,15 @@ $comments_result = mysqli_query($conn, $comments_query);
 // comments
 while ($comment = mysqli_fetch_assoc($comments_result)) {
   $username = find_member_data_by_mem_id($comment['mem_id']);
-    echo "<p>{$username[0]}".":"."{$comment['comment']}"." "."{$comment['rating']}</p>";
-
+  echo "<p>{$username[0]}".":"."{$comment['comment']}"." "."{$comment['rating']}</p>";
 }
 ?>
+</div>
 
-<!-- comment form -->
+<!-- Add comment form -->
 <h3>Add a Comment</h3>
-<form method="post" action="add_comment.php"> 
-    <textarea name="commentText" rows="4" cols="50"></textarea><br>
-    <input type="submit" value="Submit Comment">
-    <!-- field to send the album ID -->
-    <input type="hidden" name="albumId" value="<?php echo $albumId; ?>">
-</form> 
+<form id="comment-form">
+<textarea name="commentText" rows="4" cols="50"></textarea><br>
+<input type="submit" value="Submit Comment">
+<input type="hidden" name="albumId" value="<?php echo $albumId; ?>">
+</form>
