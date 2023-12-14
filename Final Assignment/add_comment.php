@@ -30,6 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Redirect back to the album details page after adding the comment
     $album = find_album_by_id($albumId);
     $albumname = $album[0][0];
+    echo $albumname;
     header("Location: albumdetails.php?search_term=$albumname"); // Change 'album_details.php' to your actual page
 
 

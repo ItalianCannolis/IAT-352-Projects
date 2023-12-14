@@ -30,6 +30,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 
         if ($stmt->fetch() && password_verify($password, $pass_hash)) {
             $_SESSION['username'] = $username; // Set session variable upon successful login
+            $mem_id = find_id_by_username($_SESSION['username']);
+            $_SESSION['mem_id'] = $mem_id; // Set session variable upon successful login
             header("Location: index.php"); // Redirect to index page after successful login
             exit();
         } else {

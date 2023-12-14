@@ -1,5 +1,6 @@
 <?php 
     //include 'header.php'; 
+    session_start();
     dirname(__FILE__);
     include(dirname(__FILE__).'\queryfunction.php');
 
@@ -49,10 +50,12 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
             );
 
             $result = mysqli_stmt_execute($stmt);
-            // if($result){ //for each 'if' there should be an 'else' that prints error
-            //   $_SESSION['email'] = $_POST['email'];
-            //   header("Location: showmodels.php");
-            // }
+             if($result){ //for each 'if' there should be an 'else' that prints error
+               $_SESSION['username'] = $_POST['username'];
+               $mem_id = find_id_by_username($_SESSION['username']);
+               $_SESSION['mem_id'] = $mem_id; // Set session variable upon successful login
+               header("Location: index.php");
+             }
             
           }
 
