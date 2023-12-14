@@ -1,9 +1,7 @@
 <?php 
- //include 'header.php';
 session_start();
 dirname(__FILE__);
 include(dirname(__FILE__).'\queryfunction.php');
-// include(dirname(__FILE__).'\db.php');
 include(dirname(__FILE__).'\header.php');
 
 $errors = [];
@@ -14,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
     // Retrieve data from form
     $username = $_POST['username'];
     $password = $_POST['password'];
-    
+
     if(!empty($username) && !empty($password)){
         $db = db_connect();
         
@@ -28,37 +26,38 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 
         if ($stmt->fetch() && password_verify($password, $pass_hash)) {
             $_SESSION['username'] = $username; // Set session variable upon successful login
-            header("Location: index.php"); // Redirect to index page after successful login
-            $_SESSION["mem_id"] = find_id_by_username($_SESSION['username']);
+            echo 'success'; // Send success response back to the AJAX call
             exit();
         } else {
-            $message = "Sorry, email and password combination is not correct.";
-            echo $message; // Output login failure message
+            echo 'invalid'; // Send invalid response back to the AJAX call
+            exit();
         }
     }
 }
-
 ?>
 
 <html>
-
     <h1>Login</h1>
 
-    <form class = "form-container" method = "POST">
-        <div class = "form-element-cont">
+    <form id="loginForm" class="form-container" method="POST">
+        <div class="form-element-cont">
             <label> Username </label>
-            <input type="textbox" name="username">
+            <input type="text" name="username">
         </div>
-
-        <div class = "form-element-cont">
+        <div class="form-element-cont">
             <label> Password </label>
-            <input type="textbox" name="password">
+            <input type="password" name="password">
         </div>
-
-        <input type = "submit" value = "Login"> 
+        <input type="submit" value="Login"> 
         <br>
-        <!-- redirect non-members to the register page -->
+        <span id="loginError"></span>
+        <br>
         <a href="register.php"> Not registered yet. Register here. </a>
     </form>
 
+    <!-- Include jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Include your separate JavaScript file -->
+    <script src="loginScript.js"></script>
 </html>
+
