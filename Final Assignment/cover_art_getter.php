@@ -31,10 +31,15 @@
         if($collageNames != null){
             if(isset($_POST['collagename'])){
                     $coverID = find_collage_id_by_name($_POST['collagename']);
-                    $ids = explode(",",$coverID[1]);
-                    shuffle($ids);
+                    if ($coverID[1] != '/n'){
+                        $ids = explode(",",$coverID[1]);
+                        shuffle($ids);
 
-                    storeDispImages($ids, $path);
+                        storeDispImages($ids, $path);
+                    }
+                    else{
+                        echo "<h2> This collage has nothing in it! Add some stuff!</h2>";
+                    }
                 }
             else if(!isset($_POST['collagename'])){
                 $collageNames = find_collage_owner_by_mem_id($_SESSION['mem_id']);
