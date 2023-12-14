@@ -42,3 +42,27 @@ $album = find_album_by_name($name);
   </div>
 
 </div>
+
+<!-- added co m ments here cause it  makes the  most sense-->
+<h3>Comments:</h3>
+<div class="comments-section">
+    <!-- Display comments here -->
+</div>
+
+<!-- Comment Form -->
+<?php
+if (isset($_SESSION['user_id'])) { // check if the user is logged in
+    // a comment form if the user is logged in
+    ?>
+    <h3>Add a Comment:</h3>
+    <form method="POST" action="add_comment.php"> 
+        <input type="hidden" name="album_id" value="<?php echo $album_id; ?>">
+        <textarea name="comment_text" placeholder="Write your comment here"></textarea>
+        <input type="submit" value="Post Comment">
+    </form>
+<?php
+} else {
+    //  display a message asking users to log in to comment
+    echo '<p>Please <a href="login.php">log in</a> to comment on this album.</p>';
+}
+?>
