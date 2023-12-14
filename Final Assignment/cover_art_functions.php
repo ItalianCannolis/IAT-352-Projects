@@ -14,8 +14,29 @@ for ($x = 0; $x < count($collageNames); $x++){
 }
 
 
+echo "</select>";
+echo '<input type="submit">
+</form>';
+
+}
+
+function generate_dropdown_addition($collageNames,$urlfull){
+
+    echo "<form action='$urlfull' method='post'>";
+    echo '<label for="collages">Choose a collage:</label>
+    <select id="collagename" name="collagename">';
+    
+    
+    for ($x = 0; $x < count($collageNames); $x++){
+        echo "<option value=".$collageNames[$x].">".$collageNames[$x]."</option>";
+    
+    
+    }
+
+
 
 echo "</select>";
+
 echo '<input type="submit">
 </form>';
 
