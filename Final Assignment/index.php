@@ -91,13 +91,7 @@ mysqli_close($db);
     </style>
 </head>
 <body>
-    <header>
-        <nav class="navchild">
-            <ul class="nav_links">
-                <!-- linking to each albun art on database? -->
-            </ul>
-        </nav>
-    </header>
+
 
     <h2>Search Cover Arts</h2>
     <form method="get" action="cover_art_search.php">
