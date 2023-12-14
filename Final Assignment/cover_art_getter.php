@@ -33,6 +33,7 @@
             if(isset($_POST['collagename'])){
                 //Grabs the ids of the cover art to reference for later
                     $coverID = find_collage_id_by_name($_POST['collagename']);
+                    //This is the default case for if there is nothing, thus if it is false then it will explode
                     if ($coverID[1] != '/n'){
                         $ids = explode(",",$coverID[1]);
                         shuffle($ids);
@@ -47,6 +48,7 @@
                 $collageNames = find_collage_owner_by_mem_id($_SESSION['mem_id']);
                 $coverID = find_collage_id_by_name($collageNames[0]);
                 $ids = explode(",",$coverID[1]);
+                //Shuffles the ids to randomize the layout of the collage
                 shuffle($ids);
 
                 storeDispImages($ids, $path);
