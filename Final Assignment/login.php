@@ -9,14 +9,14 @@ $username = '';
 $password = '';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST'){
-    // Retrieve data from form
+    // Retrieve form
     $username = $_POST['username'];
     $password = $_POST['password'];
 
     if(!empty($username) && !empty($password)){
         $db = db_connect();
         
-        // Retrieve encrypted password that matches username
+        // Retrieve pw that matches username
         $query = "SELECT encryptedPassword FROM member WHERE username = ?";
         
         $stmt = $db->prepare($query);
@@ -25,11 +25,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
         $stmt->bind_result($pass_hash);
 
         if ($stmt->fetch() && password_verify($password, $pass_hash)) {
-            $_SESSION['username'] = $username; // Set session variable upon successful login
-            echo 'success'; // Send success response back to the AJAX call
+            $_SESSION['username'] = $username;
+             // successful login
+            echo 'success'; 
             exit();
         } else {
-            echo 'invalid'; // Send invalid response back to the AJAX call
+            // send invalid response AJAX call
+            echo 'invalid';
             exit();
         }
     }
@@ -54,10 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
         <br>
         <a href="register.php"> Not registered yet. Register here. </a>
     </form>
-
-    <!-- Include jQuery library -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <!-- Include your separate JavaScript file -->
     <script src="loginScript.js"></script>
 </html>
 
