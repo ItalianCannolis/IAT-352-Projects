@@ -128,7 +128,7 @@
         
         $conn = db_connect();
                     
-            $sql ='SELECT songs_group.name AS "album_name",medium.track_count AS "track_count",tracks.length AS "track_length",tracks.name AS "track_name", artist_cred.name AS "artist_name" FROM songs_group, songs, `medium`,tracks, artist_cred WHERE songs_group.name = ? AND songs_group.id = songs.songs_group AND medium.songs = songs.id AND medium.id = tracks.medium AND artist_cred.id = songs_group.artist_credit';
+            $sql ='SELECT songs_group.name AS "album_name",medium.track_count AS "track_count",tracks.length AS "track_length",tracks.name AS "track_name", artist_cred.name AS "artist_name",songs_group.id AS "songs_groups_id" FROM songs_group, songs, `medium`,tracks, artist_cred WHERE songs_group.name = ? AND songs_group.id = songs.songs_group AND medium.songs = songs.id AND medium.id = tracks.medium AND artist_cred.id = songs_group.artist_credit';
             
             $statement = $conn->prepare($sql);
             $statement->bind_param("s", $name);
@@ -154,6 +154,46 @@
                 $array[$count][2] = $row["track_name"];
                 $array[$count][3] = $row["track_count"];
                 $array[$count][4] = $row["track_length"];
+                $array[$count][5] = $row["songs_groups_id"];
+
+                $count++;
+            }
+ 
+
+            return $array;
+      }
+
+      function find_album_by_id($id) { //search for cover art by ID
+        
+        $conn = db_connect();
+                    
+            $sql ='SELECT songs_group.name AS "album_name",medium.track_count AS "track_count",tracks.length AS "track_length",tracks.name AS "track_name", artist_cred.name AS "artist_name",songs_group.id AS "songs_groups_id" FROM songs_group, songs, `medium`,tracks, artist_cred WHERE songs_group.id = ? AND medium.songs = songs.id AND medium.id = tracks.medium AND artist_cred.id = songs_group.artist_credit';
+            
+            $statement = $conn->prepare($sql);
+            $statement->bind_param("i", $id);
+            $statement->execute() or die("<b>Error:</b> Problem on Retrieving Image BLOB<br/>" . mysqli_connect_error());
+            $result = $statement->get_result();
+        
+            //$row = $result->fetch_assoc();
+            //header("Content-type: " . $row["imageType"]);
+            //echo $row["cover"];
+            
+            //echo base64_decode($row["cover"]);
+            //echo ($row["filetype"]);
+            //$array[0] = $row["id"];
+
+            $array = array();
+            $array[] = array();
+            $count = 0;
+
+            while ($row = $result->fetch_assoc()) {
+
+                $array[$count][0] = $row["album_name"];
+                $array[$count][1] = $row["artist_name"];
+                $array[$count][2] = $row["track_name"];
+                $array[$count][3] = $row["track_count"];
+                $array[$count][4] = $row["track_length"];
+                $array[$count][5] = $row["songs_groups_id"];
 
                 $count++;
             }
@@ -212,6 +252,22 @@
 
         
 
+      }
+
+      function find_comment_by_songs_group($songs_group) { //search for cover art by ID
+        
+        $conn = db_connect();
+
+            $sql = "SELECT mem_id FROM member WHERE username=?";
+            $statement = $conn->prepare($sql);
+            $statement->bind_param("s", $songs_group);
+            $statement->execute() or die("<b>Error:</b> Problem on Retrieving mem_id<br/>" . mysqli_connect_error());
+            $result = $statement->get_result();
+        
+            $row = $result->fetch_assoc();
+
+          
+            return  $row["mem_id"];
       }
 
 

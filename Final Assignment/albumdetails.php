@@ -1,4 +1,5 @@
 <?php 
+    session_start();
     include 'header.php';
     include 'queryfunction.php';
  
@@ -50,12 +51,14 @@ $album = find_album_by_name($_GET['search_term']);
 <?php
 // $albumId contains the ID of the album
 // comments for the specific album from the database
-$comments_query = "SELECT * FROM comments WHERE album_id = $albumId";
-$comments_result = mysqli_query($connection, $comments_query);
+$conn = db_connect();
+$albumId = $album[0][5];
+$comments_query = "SELECT * FROM comments WHERE song_group = $albumId";
+$comments_result = mysqli_query($conn, $comments_query);
 
 // comments
 while ($comment = mysqli_fetch_assoc($comments_result)) {
-    echo "<p>{$comment['comment_text']}</p>";
+    echo "<p>{$comment['comment']}{$comment['comment']}"." "."{$comment['rating']}</p>";
 
 }
 ?>
