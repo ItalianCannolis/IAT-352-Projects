@@ -67,3 +67,12 @@ if (isset($_SESSION['user_id'])) { // check if the user is logged in
     echo '<p>Please <a href="login.php">log in</a> to comment on this album.</p>';
 }
 ?>
+
+orm -->
+<h3>Add a Comment</h3>
+<form method="post" action="add_comment.php"> 
+    <textarea name="commentText" rows="4" cols="50"></textarea><br>
+    <input type="submit" value="Submit Comment">
+    <!-- field to send the album ID -->
+    <input type="hidden" name="albumId" value="<?php echo $albumId; ?>">
+</form> 
