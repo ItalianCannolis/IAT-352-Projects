@@ -99,13 +99,29 @@
 
       }
       function add_to_collage_by_mem_id($mem_id,$cover_list_name,$album_id) { 
+        $duplicate = false;
         $album_id_list = find_collage_id_by_name($cover_list_name);
         if($album_id_list[1] != '/n'){
             
-            $album_id_list[1] = $album_id_list[1].",".$album_id;
+            $check = explode(',',$album_id_list[1]);
+            for($i = 0; $i < count($check); $i++){
+
+                if($check[$i] == $album_id){
+                    $duplicate = true;
+                }
+            }
+
+            if($duplicate == false){
+                $album_id_list[1] = $album_id_list[1].",".$album_id;
+            }
+            else{
+            echo "<h2> you already have this in this collage! </h2>";
+            }
         }
         else{
+
             $album_id_list[1] = $album_id;
+
         }
 
         $conn = db_connect();
