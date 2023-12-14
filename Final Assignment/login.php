@@ -1,7 +1,9 @@
 <?php 
+ //include 'header.php';
 session_start();
 dirname(__FILE__);
 include(dirname(__FILE__).'\queryfunction.php');
+// include(dirname(__FILE__).'\db.php');
 include(dirname(__FILE__).'\header.php');
 
 $errors = [];
@@ -9,14 +11,16 @@ $username = '';
 $password = '';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST'){
-    // Retrieve form
+    // Retrieve data from form
     $username = $_POST['username'];
     $password = $_POST['password'];
 
+    
+    
     if(!empty($username) && !empty($password)){
         $db = db_connect();
         
-        // Retrieve pw that matches username
+        // Retrieve encrypted password that matches username
         $query = "SELECT encryptedPassword FROM member WHERE username = ?";
         
         $stmt = $db->prepare($query);
@@ -25,38 +29,39 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
         $stmt->bind_result($pass_hash);
 
         if ($stmt->fetch() && password_verify($password, $pass_hash)) {
-            $_SESSION['username'] = $username;
-             // successful login
-            echo 'success'; 
+            $_SESSION['username'] = $username; // Set session variable upon successful login
+            header("Location: index.php"); // Redirect to index page after successful login
             exit();
         } else {
-            // send invalid response AJAX call
-            echo 'invalid';
-            exit();
+            $message = "Sorry, email and password combination is not correct.";
+            echo $message; // Output login failure message
         }
     }
 }
+
 ?>
 
 <html>
+
     <h1>Login</h1>
 
-    <form id="loginForm" class="form-container" method="POST">
-        <div class="form-element-cont">
+    <form class = "form-container" method = "POST">
+        <div class = "form-element-cont">
             <label> Username </label>
-            <input type="text" name="username">
+            <input type="textbox" name="username">
         </div>
-        <div class="form-element-cont">
+
+        <div class = "form-element-cont">
             <label> Password </label>
-            <input type="password" name="password">
+            <input type="textbox" name="password">
         </div>
-        <input type="submit" value="Login"> 
+
+        <input type = "submit" value = "Login"> 
         <br>
-        <span id="loginError"></span>
-        <br>
+        <!-- redirect non-members to the register page -->
         <a href="register.php"> Not registered yet. Register here. </a>
     </form>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="loginScript.js"></script>
+
 </html>
+
 
