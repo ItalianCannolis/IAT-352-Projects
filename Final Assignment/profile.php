@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>User Profile</title>
-    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
@@ -12,6 +11,7 @@
                 session_start();
                 include(dirname(__FILE__).'\queryfunction.php');
                 include(dirname(__FILE__).'\header.php');
+                include(dirname(__FILE__).'\profile_functions.php');
                 
                 ?>
 
@@ -22,23 +22,18 @@
             <h1>User Profile</h1>
             <?php
             if(isset($_SESSION['username'])) {
-                $username = $_SESSION['username'];
-                // fetch user data based on the username
-                $db = db_connect();
-                $query = "SELECT * FROM member WHERE username = ?";
-                
-                $stmt = $db->prepare($query);
-                $stmt->bind_param("s", $username);
-                $stmt->execute();
-                $result = $stmt->get_result();
 
-                if($result->num_rows === 1) {
+                $member_data = find_member_data_by_mem_id($_SESSION['mem_id']);
+                $path = "img";
+                if($member_data[0] != null) {
 
-                    $user = $result->fetch_assoc();
+                    //$user = $result->fetch_assoc();
                     //  information on the profile page
                     echo "<div class='user-details'>";
-                    echo "<p>Username: {$user['username']}</p>";
-                    echo "<p>Email: {$user['email']}</p>";
+
+                    echo storeDispProfileImg($member_data[2], $path);
+                    echo "<p>Username: {$member_data[0]}</p>";
+                    echo "<p>Email: {$member_data[1]}</p>";
                     //  user details as needed
                     echo "</div>";
                 } else {
