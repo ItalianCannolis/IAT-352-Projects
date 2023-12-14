@@ -94,9 +94,9 @@ mysqli_close($db);
 
 
     <h2>Search Cover Arts</h2>
-    <form method="get" action="cover_art_search.php">
+    <form method="get" action="albumdetails.php">
         <!-- search for cover art -->
-        <input type="text" name="search_term" placeholder="search cover art">
+        <input type="text" name="search_term" id = "search_term" placeholder="search cover art">
         <input type="submit" value="Search">
     </form>
 

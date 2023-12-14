@@ -128,7 +128,7 @@
         
         $conn = db_connect();
                     
-            $sql ='SELECT songs_group.name AS "album_name",medium.track_count AS "track_count",tracks.length AS "track_length",tracks.name AS "track_name", artist_cred.name AS "artist_name" FROM songs_group, songs, `medium`,tracks, artist_cred WHERE songs_group.name = ? AND songs_group.id = songs.songs_group AND medium.song = songs.id AND medium.id = tracks.medium AND artist_cred.id = songs_group.artist_credit';
+            $sql ='SELECT songs_group.name AS "album_name",medium.track_count AS "track_count",tracks.length AS "track_length",tracks.name AS "track_name", artist_cred.name AS "artist_name" FROM songs_group, songs, `medium`,tracks, artist_cred WHERE songs_group.name = ? AND songs_group.id = songs.songs_group AND medium.songs = songs.id AND medium.id = tracks.medium AND artist_cred.id = songs_group.artist_credit';
             
             $statement = $conn->prepare($sql);
             $statement->bind_param("s", $name);
