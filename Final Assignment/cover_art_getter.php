@@ -73,6 +73,9 @@
    
         
     }
+    else{
+        echo "<h2> Log in to see your collages </h2>";
+    }
     
            //echo '<img src="Img/collage'.$x.'.jpg' . '" />';
 

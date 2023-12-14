@@ -26,6 +26,7 @@
                     if(end($urlcheck) == "profile.php"){
                         echo '<li><a href="edit_profile.php">Edit Profile</a></li>';
                     }
+                    //echo"";
                 } else {
                     // echo '<li><a href="login.php">Sign in</a></li>';
                     echo '<li><a href="register.php">Register</a></li>';
@@ -34,7 +35,7 @@
 
                 }
                 ?>
-                <li><a href="cover_art_getter.php">Cover Art Catalogue</a></li>
+                <li><a href='cover_art_getter.php'>Cover Art Catalogue</a></li>
                 
                 
                 <!---<li><a href="cover_art_getter.php">Collage</a></li> -->

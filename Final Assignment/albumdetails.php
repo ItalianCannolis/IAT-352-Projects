@@ -40,23 +40,24 @@ $album = find_album_by_name($_GET['search_term']);
      
       <!-- add a button to add to watch list -->
       <?php
-      $collageNames = find_collage_owner_by_mem_id($_SESSION['mem_id']);
-      $urlcheck = parse_url($url, PHP_URL_PATH);
-      $urlquery = parse_url($url, PHP_URL_QUERY);
+      if(isset($_SESSION['mem_id'])){
+        $collageNames = find_collage_owner_by_mem_id($_SESSION['mem_id']);
+        $urlcheck = parse_url($url, PHP_URL_PATH);
+        $urlquery = parse_url($url, PHP_URL_QUERY);
 
-      $urlcheck = str_split($urlcheck);
-      $urlcheck = implode($urlcheck);
+        $urlcheck = str_split($urlcheck);
+        $urlcheck = implode($urlcheck);
 
-      $urlfull = $urlcheck."?".$urlquery;
-      generate_dropdown_addition($collageNames, $urlfull);
+        $urlfull = $urlcheck."?".$urlquery;
+        generate_dropdown_addition($collageNames, $urlfull);
 
 
-      //$coverID = find_collage_id_by_name($_POST['collagename'])
-      if(isset($_POST['collagename'])){
-        add_to_collage_by_mem_id($_SESSION['mem_id'],$_POST['collagename'],$album[0][5]);
-      }
+        //$coverID = find_collage_id_by_name($_POST['collagename'])
+        if(isset($_POST['collagename'])){
+          add_to_collage_by_mem_id($_SESSION['mem_id'],$_POST['collagename'],$album[0][5]);
+        }
       
-
+      }
       ?>
       <!--<a class="redirect-button" href="addtowatchlist.php"> Add to Collage </a> -->
       <!-- addtowatchlist is currently empty -->
