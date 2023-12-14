@@ -58,7 +58,8 @@ $comments_result = mysqli_query($conn, $comments_query);
 
 // comments
 while ($comment = mysqli_fetch_assoc($comments_result)) {
-    echo "<p>{$comment['comment']}{$comment['comment']}"." "."{$comment['rating']}</p>";
+  $username = find_member_data_by_mem_id($comment['mem_id']);
+    echo "<p>{$username[0]}".":"."{$comment['comment']}"." "."{$comment['rating']}</p>";
 
 }
 ?>
