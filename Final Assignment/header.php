@@ -34,7 +34,6 @@
 
                 }
                 ?>
-                <li><a href="cover_art_search.php">Search Cover Arts</a></li>
                 <li><a href="cover_art_getter.php">Cover Art Catalogue</a></li>
                 
                 
