@@ -44,31 +44,23 @@ $album = find_album_by_name($_GET['search_term']);
 
 </div>
 
-<!-- added co m ments here cause it  makes the  most sense-->
-<h3>Comments:</h3>
-<div class="comments-section">
-    <!-- Display comments here -->
-</div>
+<!-- Display comments -->
+<h3>Comments</h3>
 
-<!-- Comment Form -->
 <?php
-if (isset($_SESSION['user_id'])) { // check if the user is logged in
-    // a comment form if the user is logged in
-    ?>
-    <h3>Add a Comment:</h3>
-    <form method="POST" action="add_comment.php"> 
-        <input type="hidden" name="album_id" value="<?php echo $album_id; ?>">
-        <textarea name="comment_text" placeholder="Write your comment here"></textarea>
-        <input type="submit" value="Post Comment">
-    </form>
-<?php
-} else {
-    //  display a message asking users to log in to comment
-    echo '<p>Please <a href="login.php">log in</a> to comment on this album.</p>';
+// $albumId contains the ID of the album
+// comments for the specific album from the database
+$comments_query = "SELECT * FROM comments WHERE album_id = $albumId";
+$comments_result = mysqli_query($connection, $comments_query);
+
+// comments
+while ($comment = mysqli_fetch_assoc($comments_result)) {
+    echo "<p>{$comment['comment_text']}</p>";
+
 }
 ?>
 
-orm -->
+<!-- comment form -->
 <h3>Add a Comment</h3>
 <form method="post" action="add_comment.php"> 
     <textarea name="commentText" rows="4" cols="50"></textarea><br>
