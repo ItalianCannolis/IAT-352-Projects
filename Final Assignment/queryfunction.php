@@ -207,16 +207,11 @@
 
             //$sql = "SELECT username, email, profile_pic FROM member WHERE mem_id=?";
             $statement = $conn->prepare($sql);
-            $statement->bind_param("bi",$profile_pic ,$mem_id);
+            $statement->bind_param("si",$profile_pic ,$mem_id);
             $statement->execute() or die("<b>Error:</b> Problem on Retrieving email, username and profile pic<br/>" . mysqli_connect_error());
-            $result = $statement->get_result();
+
         
-            $row = $result->fetch_assoc();
-            
-            $array[0] = $row["username"];
-            $array[1] = $row["email"];
-            $array[2] = $row["profile_pic"];
-            return  $array;
+
       }
 
 
