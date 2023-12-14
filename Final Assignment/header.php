@@ -29,12 +29,15 @@
                 } else {
                     // echo '<li><a href="login.php">Sign in</a></li>';
                     echo '<li><a href="register.php">Register</a></li>';
-                    echo "<li><button onclick='location.href = 'login.php';' id='myButton' class='submit-button'>Sign in</button></li>";
+                    $location = "location.href = 'login.php';";
+                    echo "<li><a href='login.php' class='submit-button'>Sign in</button></li>";
 
                 }
                 ?>
                 <li><a href="cover_art_search.php">Search Cover Arts</a></li>
                 <li><a href="cover_art_getter.php">Cover Art Catalogue</a></li>
+                
+                
                 <!---<li><a href="cover_art_getter.php">Collage</a></li> -->
                 <li>
             </ul>
